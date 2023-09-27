@@ -1,5 +1,8 @@
-
-
 .Board {
   margin: 0 auto;
+}
+
+.Board-title {
+  color: lightseagreen;
+  font-size: 3rem;
 }

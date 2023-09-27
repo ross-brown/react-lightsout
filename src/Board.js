@@ -50,8 +50,8 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.25 }) {
     return board.every(row => row.every(light => !light));
   }
 
-  /** takes in y-x coordinates and sets the state of the board with that cell
-   * and the cells around it flipped
+  /** takes in y-x coordinates for a cell and sets the state of the board
+   *  with that cell and the cells around it flipped
    */
   function flipCellsAround(coord) {
     setBoard(oldBoard => {
@@ -83,6 +83,7 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.25 }) {
 
   return (
     <div className="Board">
+      <h1 className="Board-title">LIGHTS OUT</h1>
       {/* if the game is won, just show a winning msg & render nothing else */}
       {hasWon() ? <h1>You won!</h1> :
         <table>

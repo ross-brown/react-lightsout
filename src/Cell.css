@@ -3,6 +3,8 @@
   width: 100px;
   background-color: lightgray;
   cursor: pointer;
+  transition: all 0.5s ease-out;
+  /* border-radius: 100%; */
 }
 
 .Cell-lit {
