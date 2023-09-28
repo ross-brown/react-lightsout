@@ -32,17 +32,9 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.25 }) {
 
   /** create a board nrows high/ncols wide, each cell randomly lit or unlit */
   function createBoard() {
-    let initialBoard = [];
-
-    for (let i = 0; i < nrows; i++) {
-      const row = [];
-      for (let j = 0; j < ncols; j++) {
-        row.push(Math.random() < chanceLightStartsOn);
-      }
-      initialBoard.push(row);
-    }
-
-    return initialBoard;
+    return Array.from({ length: nrows }).map(row =>
+      Array.from({ length: ncols }).map(cell =>
+        Math.random() < chanceLightStartsOn));
   }
 
   /** check the board in state to determine whether the player has won. */
@@ -80,32 +72,29 @@ function Board({ nrows = 5, ncols = 5, chanceLightStartsOn = 0.25 }) {
     });
   }
 
+  const tableBoard = (
+    <table>
+      <tbody>
+        {board.map((row, rIdx) =>
+        (<tr key={rIdx}>
+          {row.map((light, cIdx) =>
+            <Cell
+              key={`${rIdx}-${cIdx}`}
+              flipCellsAroundMe={flipCellsAround}
+              isLit={light}
+              coord={`${rIdx}-${cIdx}`}
+            />
+          )}
+        </tr>)
+        )}
+      </tbody>
+    </table>);
 
   return (
     <div className="Board">
       <h1 className="Board-title">LIGHTS OUT</h1>
       {/* if the game is won, just show a winning msg & render nothing else */}
-      {hasWon() ? <h1>You won!</h1> :
-        <table>
-          <tbody>
-            {board.map((row, rIdx) => {
-              return (
-                <tr key={rIdx}>
-                  {row.map((light, cIdx) =>
-                    <Cell
-                      key={`${rIdx}-${cIdx}`}
-                      flipCellsAroundMe={flipCellsAround}
-                      isLit={light}
-                      coord={`${rIdx}-${cIdx}`}
-                    />
-                  )}
-                </tr>
-              );
-            })
-            }
-          </tbody>
-        </table>
-      }
+      {hasWon() ? <h1>You won!</h1> : tableBoard}
     </div>
   );
 }
